@@ -12,6 +12,7 @@ import { AdminLandingComponent } from './admin/admin-landing/admin-landing.compo
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { ErrorComponent } from './shared/error/error.component';
+import { reducers } from './store'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { ErrorComponent } from './shared/error/error.component';
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot(reducers)
   ],
   providers: [],
   bootstrap: [AppComponent]
