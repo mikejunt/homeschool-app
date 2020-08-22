@@ -20,7 +20,7 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.user$.subscribe(userstate => {
-      console.log("Toolbar Component:", userstate)
+      console.log("Toolbar Component gets user from state:", userstate)
       this.user = userstate})
   }
 
