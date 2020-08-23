@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { RootState } from '../store';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { Observable, from } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Auth0UserProfile } from '../interfaces/auth0user.interface';
 import { User } from '../interfaces/user.interface';
 import * as Actions from '../store/actions';

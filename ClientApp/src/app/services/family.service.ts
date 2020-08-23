@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { RootState } from '../store';
 import { HttpClient } from '@angular/common/http';
@@ -10,14 +10,11 @@ import { FamilyMember } from '../interfaces/family-member.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class FamilyService implements OnInit {
+export class FamilyService {
   fids$: Observable<number[]>
 
   constructor(private store: Store<RootState>, private http: HttpClient) {
     this.fids$ = this.store.select(Selectors.getFids)
-  }
-
-  ngOnInit() {
     this.fids$.subscribe(fids => {
       console.log("service receives Fids:", fids)
       if (fids.length > 0 ) {
@@ -28,7 +25,7 @@ export class FamilyService implements OnInit {
   getFamilyMembers(fids: number[]) {
     if (fids.length > 0) {
       let querystring = "https://hsappapi.azurewebsites.net/api/users/family?"
-      fids.forEach(val => querystring.concat(`fids=${val}&`))
+      fids.forEach(val => {querystring = querystring.concat(`fids=${val}&`)})
       console.log("full familymember querystring is:", querystring)
       this.http.get(querystring).subscribe((members: FamilyMember[]) => {
         this.store.dispatch(Actions.setFamilyMembers({ familymembers: members }))

@@ -19,10 +19,11 @@ export class MinorService {
     this.store.dispatch(Actions.setMinorInfo({minors: minors}))
     let mids: number[] = []
     minors.forEach(obj => mids.push(obj.id))
-    console.log("Minor Ids:", mids)
     let querystring = "https://hsappapi.azurewebsites.net/api/family/minors?"
-    mids.forEach(val => querystring.concat(`uids=${val}&`))
-    console.log("querystring is now:", querystring)
+    mids.forEach(val => {
+      let uidstring = `uids=${val}&`
+      querystring = querystring.concat(uidstring)
+  })
     this.http.get(querystring).subscribe((memberships: UserMembership[]) => {
       this.store.dispatch(Actions.setMinorMemberships({membership: memberships}))
     })
