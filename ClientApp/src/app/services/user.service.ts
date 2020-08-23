@@ -11,7 +11,7 @@ import { FamilyService } from './family.service';
 import { MinorService } from './minor.service';
 import { TasksService } from './tasks.service';
 import { UserMembership } from '../interfaces/user-membership.interface';
-import { TileStyler } from '@angular/material/grid-list/tile-styler';
+
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +74,7 @@ export class UserService {
     this.store.dispatch(Actions.setUserInfo({ user: user }))
     this.getUserMemberships(user.id)
     this.minors.getUsersMinors(user.email)
+    // Tasks retrieval will go here.
   }
 
   getUserMemberships(id: number) {
