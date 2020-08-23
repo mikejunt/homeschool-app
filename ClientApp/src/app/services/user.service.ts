@@ -25,11 +25,8 @@ export class UserService {
   handleAuthenticatedUser() {
     this.user$ = this.auth.getUser$()
     this.user$.subscribe((auth: Auth0UserProfile) => {
-      console.log("Auth0 User Profile:", auth)
       let userquery = `https://hsappapi.azurewebsites.net/api/users/email/${auth.email}`
-      console.log("userquery string is:", userquery)
       this.http.get(userquery).subscribe((data: User[]) => {
-        console.log("user by email returns", data)
         if (data.length === 0) {
           console.log("No user profile found: Creating new user profile.")
           let newuser: User = {
@@ -45,10 +42,10 @@ export class UserService {
           })
         }
         else {
-          console.log("User profile found.  Get other user data, update profile if necessary.")
           let user: User = { ...data[0] }
           this.getUserData(user)
           if (user.firstName != auth.given_name || user.lastName != auth.family_name || user.photo != auth.picture) {
+            console.log("Updating user profile due to information mismatch.")
             let fixedprofile = {
               id: user.id,
               email: user.email,
