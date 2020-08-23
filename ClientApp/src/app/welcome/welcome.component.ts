@@ -14,7 +14,8 @@ export class WelcomeComponent implements OnInit {
   }
 
   login() {
-    console.log("login function called")
+    console.log("login function called");
+    this.auth.login('/admin').subscribe()
   }
 
 }

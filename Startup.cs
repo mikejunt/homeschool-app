@@ -24,7 +24,7 @@ namespace homeschool_app
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/Homeschool/dist";
+                configuration.RootPath = "ClientApp/dist";
             });
         }
 
@@ -63,7 +63,7 @@ namespace homeschool_app
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "ClientApp/Homeschool";
+                spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
                 {
