@@ -18,7 +18,11 @@ export class FamilyService implements OnInit {
   }
 
   ngOnInit() {
-    this.fids$.subscribe(fids => this.getFamilyMembers(fids))
+    this.fids$.subscribe(fids => {
+      console.log("service receives Fids:", fids)
+      if (fids.length > 0 ) {
+      this.getFamilyMembers(fids)
+    }})
   }
 
   getFamilyMembers(fids: number[]) {

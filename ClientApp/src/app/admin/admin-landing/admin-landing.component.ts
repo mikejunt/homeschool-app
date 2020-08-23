@@ -23,6 +23,8 @@ export class AdminLandingComponent implements OnInit {
   minorids: Array<User>
   minormemberships$: Observable<Array<UserMembership>>
   minormemberships: Array<UserMembership>
+  fids$: Observable<number[]>
+  fids: number[]
 
 
   constructor(private store: Store<RootState>) {
@@ -31,24 +33,29 @@ export class AdminLandingComponent implements OnInit {
     this.familymembers$ = this.store.select(Selectors.getFamilyMembers)
     this.minorids$ = this.store.select(Selectors.getMinorProfiles)
     this.minormemberships$ = this.store.select(Selectors.getMinorMemberships)
+    this.fids$ = this.store.select(Selectors.getFids)
    }
 
   ngOnInit(): void {
-    this.user$.subscribe(userstate => {
+    this.user$.subscribe(userstate => { 
       console.log("Admin Component receives User from state:", userstate);
       this.user = userstate})
-    this.usermemberships$.subscribe(usermemberstate => {
+    this.usermemberships$.subscribe(usermemberstate => { if (usermemberstate.length > 0) {
       console.log("Admin Component receives User Memberships from state:", usermemberstate);
-      this.usermemberships = usermemberstate})
-    this.familymembers$.subscribe(familymemberstate => {
+      this.usermemberships = usermemberstate}})
+    this.familymembers$.subscribe(familymemberstate => { if (familymemberstate.length > 0) {
       console.log("Admin Component receives Family Members from state:", familymemberstate);
-      this.familymembers = familymemberstate})
-    this.minorids$.subscribe(minoridstate => {
+      this.familymembers = familymemberstate}})
+    this.minorids$.subscribe(minoridstate => { if (minoridstate.length > 0) {
       console.log("Admin Component receives Minor Profiles from state:", minoridstate);
-      this.minorids = minoridstate})
-    this.minormemberships$.subscribe(minormemberstate => {
+      this.minorids = minoridstate}})
+    this.minormemberships$.subscribe(minormemberstate => { if (minormemberstate.length > 0) {
       console.log("Admin Component receives Minor Family Memberships from state:", minormemberstate);
-      this.minormemberships = minormemberstate})
+      this.minormemberships = minormemberstate}})
+    this.fids$.subscribe(fidstate => { if (fidstate.length > 0) {
+      console.log("admin component receives fids from state:", fidstate)
+      this.fids = fidstate
+    }})
   }
 
 }
