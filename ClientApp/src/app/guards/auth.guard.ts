@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
           concatMap(_ => this.auth.handleAuthCallback()),
           tap(res=>{
             if (this.initial && res.loggedIn) {
-              this.user.setUserData()
+              this.user.handleAuthenticatedUser()
               this.initial = false
             }}),
           concatMap(result => iif(() => result.loggedIn, of(true),
