@@ -79,8 +79,6 @@ export class UserService {
       let fids: number[] = []
       if (memberships.length > 0) {
         memberships.forEach(obj => fids.push(obj.familyId))
-        console.log("FIDs are:", fids)
-        console.log("Memberships are:", memberships)
         this.store.dispatch(Actions.setUserMemberships({ membership: memberships }))
         this.store.dispatch(Actions.setFamilyIds({ fids: fids }))
       }

@@ -16,7 +16,6 @@ export class FamilyService {
   constructor(private store: Store<RootState>, private http: HttpClient) {
     this.fids$ = this.store.select(Selectors.getFids)
     this.fids$.subscribe(fids => {
-      console.log("service receives Fids:", fids)
       if (fids.length > 0 ) {
       this.getFamilyMembers(fids)
     }})
@@ -26,7 +25,6 @@ export class FamilyService {
     if (fids.length > 0) {
       let querystring = "https://hsappapi.azurewebsites.net/api/users/family?"
       fids.forEach(val => {querystring = querystring.concat(`fids=${val}&`)})
-      console.log("full familymember querystring is:", querystring)
       this.http.get(querystring).subscribe((members: FamilyMember[]) => {
         this.store.dispatch(Actions.setFamilyMembers({ familymembers: members }))
       })
