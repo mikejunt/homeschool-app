@@ -12,7 +12,15 @@ import { AdminLandingComponent } from './admin/admin-landing/admin-landing.compo
 import { ToolbarComponent } from './shared/toolbar/toolbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { ErrorComponent } from './shared/error/error.component';
-import { reducers } from './store'
+import { reducers } from './store';
+import { LandingComponent } from './shared/landing/landing.component';
+import { TaskBaseComponent } from './tasks/task-base/task-base.component';
+import { FamilyBaseComponent } from './admin/family/family-base/family-base.component';
+import { FamilyListComponent } from './admin/family/family-list/family-list.component';
+import { MemberDisplayComponent } from './admin/family/member-display/member-display.component';
+import { MinorBaseComponent } from './admin/minor/minor-base/minor-base.component';
+import { MinorListComponent } from './admin/minor/minor-list/minor-list.component';
+import { MinorControlComponent } from './admin/minor/minor-control/minor-control.component'
 
 @NgModule({
   declarations: [
@@ -21,7 +29,15 @@ import { reducers } from './store'
     AdminLandingComponent,
     ToolbarComponent,
     FooterComponent,
-    ErrorComponent
+    ErrorComponent,
+    LandingComponent,
+    TaskBaseComponent,
+    FamilyBaseComponent,
+    FamilyListComponent,
+    MemberDisplayComponent,
+    MinorBaseComponent,
+    MinorListComponent,
+    MinorControlComponent
   ],
   imports: [
     BrowserModule,
