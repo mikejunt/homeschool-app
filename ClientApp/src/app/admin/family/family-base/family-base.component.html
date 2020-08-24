@@ -1,8 +1,8 @@
 <div class="">
     <div *ngIf="this.membership" class="">Family: {{membership.name}}, Your Role: {{membership.role}}</div>
     <ng-container *ngIf="this.familymembers.length > 0">
-        <div class="" *ngFor="member of familymembers">
-            <app-family-list [viewuid="{{member.id}}"] [viewfid="displayfid"]></app-family-list>
+        <div class="" *ngFor="let member of familymembers">
+            <app-family-list [viewuid]="member.id" [viewfid]="displayfid"></app-family-list>
         </div>
     </ng-container>
 </div>
