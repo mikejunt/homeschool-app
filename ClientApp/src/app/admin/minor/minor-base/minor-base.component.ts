@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { RootState } from 'src/app/store';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/interfaces/user.interface';
+import * as Selectors from '../../../store/selectors'
 
 @Component({
   selector: 'app-minor-base',
@@ -6,10 +11,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./minor-base.component.scss']
 })
 export class MinorBaseComponent implements OnInit {
+  @Input() viewmid: number
+  minorprofiles$: Observable<User[]>
+  minor: User
 
-  constructor() { }
+  constructor(private store: Store<RootState>) {
+    this.minorprofiles$ = this.store.select(Selectors.getMinorProfiles)
+   }
 
   ngOnInit(): void {
+    this.minorprofiles$.subscribe((state: User[]) => {
+      let filtered = state.filter((minor: User) => minor.id === this.viewmid)
+      console.log("Minor ID:", this.viewmid, "Profile:", filtered[0])
+      this.minor = filtered[0]
+    })
   }
 
 }

@@ -8,4 +8,9 @@
             <app-family-base [displayfid="fids[i]"]></app-family-base>
         </div>
     </ng-container>
+    <ng-container *ngIf="minorids.length > 0">
+        <div *ngFor="minor of minorids, index as i" class="">
+            <app-minor-base [viewmid="minorids[i].id"]></app-minor-base>
+        </div>
+    </ng-container>
 </div>
