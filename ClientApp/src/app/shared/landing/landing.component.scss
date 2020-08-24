@@ -1,0 +1,13 @@
+.flex-parent {
+    display: flex;
+    flex-direction: row;
+    width: 100%
+}
+
+.flex-admin {
+    flex: 0 0 25%;
+}
+
+.flex-outlet {
+    flex: 0 0 75%;
+}
