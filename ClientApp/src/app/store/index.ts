@@ -4,11 +4,13 @@ import { ActionReducerMap } from "@ngrx/store";
 export interface RootState {
   user: Reducers.UserState,
   family: Reducers.FamilyState,
-  minors: Reducers.MinorState
+  minors: Reducers.MinorState,
+  views: Reducers.ViewState
 }
 
 export const reducers: ActionReducerMap<RootState> = {
   user: Reducers.userReducer,
   family: Reducers.familyReducer,
-  minors: Reducers.minorReducer
+  minors: Reducers.minorReducer,
+  views: Reducers.viewReducer
 };
