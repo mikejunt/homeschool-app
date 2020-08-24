@@ -1,1 +1,11 @@
-<p>admin-landing works!</p>
+<div class="admin-flex">
+    <div class="admin-profile">
+        <img *ngIf="user.photo" src="{{user.photo}}">
+        <p *ngIf="user">{{user.firstName}} <button mat-raised-button color="primary">New Fam</button></p>
+    </div>
+    <ng-container *ngIf="fids.length > 0">
+        <div *ngFor="fid of fids, index as i" class="admin-family">
+            <app-family-base [displayfid="fids[i]"]></app-family-base>
+        </div>
+    </ng-container>
+</div>
