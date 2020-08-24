@@ -20,7 +20,8 @@ import { FamilyListComponent } from './admin/family/family-list/family-list.comp
 import { MemberDisplayComponent } from './admin/family/member-display/member-display.component';
 import { MinorBaseComponent } from './admin/minor/minor-base/minor-base.component';
 import { MinorListComponent } from './admin/minor/minor-list/minor-list.component';
-import { MinorControlComponent } from './admin/minor/minor-control/minor-control.component'
+import { MinorControlComponent } from './admin/minor/minor-control/minor-control.component';
+import { TaskDisplayComponent } from './tasks/task-display/task-display.component'
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { MinorControlComponent } from './admin/minor/minor-control/minor-control
     MemberDisplayComponent,
     MinorBaseComponent,
     MinorListComponent,
-    MinorControlComponent
+    MinorControlComponent,
+    TaskDisplayComponent
   ],
   imports: [
     BrowserModule,
