@@ -17,9 +17,7 @@ import { LandingComponent } from './shared/landing/landing.component';
 import { TaskBaseComponent } from './tasks/task-base/task-base.component';
 import { FamilyBaseComponent } from './admin/family/family-base/family-base.component';
 import { FamilyListComponent } from './admin/family/family-list/family-list.component';
-import { MemberDisplayComponent } from './admin/family/member-display/member-display.component';
 import { MinorBaseComponent } from './admin/minor/minor-base/minor-base.component';
-import { MinorListComponent } from './admin/minor/minor-list/minor-list.component';
 import { MinorControlComponent } from './admin/minor/minor-control/minor-control.component';
 import { TaskDisplayComponent } from './tasks/task-display/task-display.component'
 
@@ -35,9 +33,7 @@ import { TaskDisplayComponent } from './tasks/task-display/task-display.componen
     TaskBaseComponent,
     FamilyBaseComponent,
     FamilyListComponent,
-    MemberDisplayComponent,
     MinorBaseComponent,
-    MinorListComponent,
     MinorControlComponent,
     TaskDisplayComponent
   ],
