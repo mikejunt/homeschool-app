@@ -50,7 +50,7 @@ export class FamilyService {
     if (family.adminId && family.name) {
       this.http.post('https://hsappapi.azurewebsites.net/api/family/new', family).subscribe((result: Family) => {
         if (result.id) {
-          this.user.getUserMemberships(this.userprofile.id)
+          this.addNewFamilyMember(result.adminId, result.id, 1)
         }
         else console.log("Error: Family couldn't save.")
       })
@@ -78,11 +78,18 @@ export class FamilyService {
       userId: uid,
       familyId: fid,
       role: role,
-      confirmed: false
     }
+    // modify this IF later to auto-confirm user adding own minors to family
+    if (this.userprofile.id === addition.userId) {
+      addition.confirmed = true
+    }
+    else addition.confirmed = false
     this.http.post('https://hsappapi.azurewebsites.net/api/relations/new', addition).subscribe((result: FamilyAddition) => {
       if (result.id) {
         this.getFamilyMembers(this.fids)
+        if (this.userprofile.id === result.userId) {
+          this.user.getUserMemberships(this.userprofile.id)
+        }
       }
       else console.log("Didn't save new relationship.")
     })

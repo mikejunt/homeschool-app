@@ -20,7 +20,8 @@ import { FamilyListComponent } from './admin/family/family-list/family-list.comp
 import { MinorBaseComponent } from './admin/minor/minor-base/minor-base.component';
 import { MinorControlComponent } from './admin/minor/minor-control/minor-control.component';
 import { TaskDisplayComponent } from './tasks/task-display/task-display.component';
-import { FamilyEditComponent } from './admin/family/family-edit/family-edit.component'
+import { FamilyEditComponent } from './admin/family/family-edit/family-edit.component';
+import { FamilyCreateComponent } from './admin/family/family-create/family-create.component'
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { FamilyEditComponent } from './admin/family/family-edit/family-edit.comp
     MinorBaseComponent,
     MinorControlComponent,
     TaskDisplayComponent,
-    FamilyEditComponent
+    FamilyEditComponent,
+    FamilyCreateComponent
   ],
   imports: [
     BrowserModule,

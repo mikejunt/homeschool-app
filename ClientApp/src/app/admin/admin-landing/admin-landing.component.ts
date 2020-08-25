@@ -4,8 +4,9 @@ import { RootState } from 'src/app/store';
 import * as Selectors from '../../store/selectors'
 import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user.interface';
-import { UserMembership } from 'src/app/interfaces/user-membership.interface';
-import { FamilyMember } from 'src/app/interfaces/family-member.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { Family } from 'src/app/interfaces/family.interface';
+import { FamilyCreateComponent } from '../family/family-create/family-create.component';
 
 @Component({
   selector: 'app-admin-landing',
@@ -21,7 +22,7 @@ export class AdminLandingComponent implements OnInit {
   fids: number[] = []
 
 
-  constructor(private store: Store<RootState>) {
+  constructor(private store: Store<RootState>, private dialog: MatDialog) {
     this.user$ = this.store.select(Selectors.getUserInfo)
     this.minorids$ = this.store.select(Selectors.getMinorProfiles)
     this.fids$ = this.store.select(Selectors.getFids)
@@ -38,6 +39,17 @@ export class AdminLandingComponent implements OnInit {
       console.log("admin component receives fids from state:", fidstate)
       this.fids = fidstate
     }})
+  }
+
+  newFamily() {
+    if (!this.user.minor) {
+      let newFamily: Family = {
+        adminId: this.user.id
+      }
+      this.dialog.open(FamilyCreateComponent, {data: newFamily})
+    }
+    else console.log("Minors can't make new families.")
+
   }
 
 }
