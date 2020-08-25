@@ -22,7 +22,9 @@ export class FamilyBaseComponent implements OnInit {
   memberships$: Observable<UserMembership[]>
   membership: UserMembership
   familymembers$: Observable<FamilyMember[]>
-  familymembers: FamilyMember[]
+  parents: FamilyMember[] = []
+  adults: FamilyMember[] = []
+  children: FamilyMember[] = []
   user$: Observable<User>
   user: User
 
@@ -38,8 +40,15 @@ export class FamilyBaseComponent implements OnInit {
       this.membership = filtered[0]
     })
     this.familymembers$.subscribe((state: FamilyMember[]) => {
-      let filtered = [...state.filter((member: FamilyMember) => member.familyId === this.displayfid)]
-      this.familymembers = filtered
+      this.parents = [...state.filter((member: FamilyMember) => {
+        return member.familyId === this.displayfid && member.role === 1 || member.role === 2
+      })]
+      this.adults = [...state.filter((member: FamilyMember) => {
+        return member.familyId === this.displayfid && member.role === 3
+      })]
+      this.children = [...state.filter((member: FamilyMember) => {
+        return member.familyId === this.displayfid && member.role === 4
+      })]
     })
     this.user$.subscribe((state: User) => [
       this.user = state

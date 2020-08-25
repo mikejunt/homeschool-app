@@ -5,9 +5,22 @@
         <button mat-mini-fab color="accent" *ngIf="this.membership.role === 1 || this.membership.role === 2"
             (click)="inviteMember()">+1</button>
     </div>
-    <ng-container *ngIf="this.familymembers.length > 0">
-        <div class="" *ngFor="let member of familymembers">
-            <app-family-list [viewuid]="member.id" [viewfid]="displayfid"></app-family-list>
+    <div *ngIf="this.parents.length > 0">
+        <span>Parents</span>
+        <div class="" *ngFor="let parent of parents">
+            <app-family-list [viewuid]="parent.id" [viewfid]="displayfid"></app-family-list>
         </div>
-    </ng-container>
+    </div>
+    <div *ngIf="this.adults.length > 0">
+        <span>Adults</span>
+        <div class="" *ngFor="let adult of adults">
+            <app-family-list [viewuid]="adult.id" [viewfid]="displayfid"></app-family-list>
+        </div>
+    </div>
+    <div *ngIf="this.children.length > 0">
+        <span>Children</span>
+        <div class="" *ngFor="let child of children">
+            <app-family-list [viewuid]="child.id" [viewfid]="displayfid"></app-family-list>
+        </div>
+    </div>
 </div>
