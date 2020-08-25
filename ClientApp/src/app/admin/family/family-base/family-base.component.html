@@ -1,6 +1,9 @@
 <div class="">
-    <div *ngIf="this.membership" class="">Family: {{membership.name}}<button mat-mini-fab color="primary"
-            *ngIf="this.membership.adminId === this.user.id" (click)="editFamily(this.membership)">E</button>
+    <div *ngIf="this.membership" class="">Family: {{membership.name}}
+        <button mat-mini-fab color="primary" *ngIf="this.membership.adminId === this.user.id"
+            (click)="editFamily(this.membership)">Ed</button>
+        <button mat-mini-fab color="accent" *ngIf="this.membership.role === 1 || this.membership.role === 2"
+            (click)="inviteMember()">+1</button>
     </div>
     <ng-container *ngIf="this.familymembers.length > 0">
         <div class="" *ngFor="let member of familymembers">

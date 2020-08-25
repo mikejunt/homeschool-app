@@ -6,9 +6,11 @@ import { Store } from '@ngrx/store';
 import { RootState } from 'src/app/store';
 import * as Selectors from '../../../store/selectors'
 import { FamilyEditComponent } from '../family-edit/family-edit.component';
+import { FamilyInviteComponent } from '../family-invite/family-invite.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Family } from 'src/app/interfaces/family.interface';
 import { User } from 'src/app/interfaces/user.interface';
+import { Relation } from 'src/app/interfaces/relation.interface';
 
 @Component({
   selector: 'app-family-base',
@@ -53,6 +55,13 @@ export class FamilyBaseComponent implements OnInit {
       }
       this.dialog.open(FamilyEditComponent, { data: targetfamily })
     }
+  }
+
+  inviteMember() {
+    if (this.membership.role === 1 || this.membership.role === 2) {
+      this.dialog.open(FamilyInviteComponent, { data: this.membership })
+    }
+    else console.log("User does not have permission to send invites.")
   }
 
 }
