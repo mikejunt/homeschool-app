@@ -1,14 +1,14 @@
-<div class="dialog-container">
-    <h2 mat-dialog-title class="">Invite New Family Member</h2>
-    <div mat-dialog-content class="">
-        <form class="" [formGroup]="inviteForm">
-            <mat-form-field class="">
+<div class="dialog-container dialog-min-width dialog-flex-container">
+    <h2 mat-dialog-title class="dialog-flex">Invite New Family Member</h2>
+    <div mat-dialog-content class="dialog-flex">
+        <form class="dialog-min-width" [formGroup]="inviteForm">
+            <mat-form-field class="dialog-min-width">
                 <mat-label>Enter Email of User to Invite:</mat-label>
                 <input matInput formControlName="email" type="text" placeholder="child@family.com">
                 <mat-hint>You can invite users who haven't signed up yet.</mat-hint>
                 <mat-error>Not a valid email address.</mat-error>
             </mat-form-field>
-            <mat-form-field class="">
+            <mat-form-field class="dialog-min-width">
                 <mat-label>Choose User Permissions:</mat-label>
                 <mat-select formControlName="role">
                     <mat-option value="2">Parent</mat-option>
@@ -18,10 +18,10 @@
                 <mat-hint>Controls how they can interact with other members.</mat-hint>
             </mat-form-field>
         </form>
-        <div mat-dialog-actions class="dialog-flex">
-            <button mat-raised-button color="primary" class="" [disabled]="!inviteForm.valid" type="submit"
-                (click)="generateInvite()">Save</button>
-            <button mat-raised-button color="warn" type="submit" (click)="cancelInvite()">Cancel</button>
-        </div>
+    </div>
+    <div mat-dialog-actions class="dialog-flex">
+        <button mat-raised-button color="primary" class="" [disabled]="!inviteForm.valid" type="submit"
+            (click)="generateInvite()">Save</button>
+        <button mat-raised-button color="warn" type="submit" (click)="cancelInvite()">Cancel</button>
     </div>
 </div>

@@ -9,7 +9,7 @@ import { FamilyMember } from '../interfaces/family-member.interface';
 import { Family } from '../interfaces/family.interface'
 import { UserService } from './user.service';
 import { User } from '../interfaces/user.interface';
-import { FamilyAddition } from '../interfaces/family-addition.interface';
+import { Relation } from '../interfaces/relation.interface';
 import { DBError } from '../interfaces/dberror.interface';
 
 @Injectable({
@@ -50,7 +50,12 @@ export class FamilyService {
     if (family.adminId && family.name) {
       this.http.post('https://hsappapi.azurewebsites.net/api/family/new', family).subscribe((result: Family) => {
         if (result.id) {
-          this.addNewFamilyMember(result.adminId, result.id, 1)
+          let invite: Relation = {
+            userId: result.adminId,
+            familyId: result.id,
+            role: 1
+          }
+          this.addNewFamilyMember(invite)
         }
         else console.log("Error: Family couldn't save.")
       })
@@ -73,18 +78,48 @@ export class FamilyService {
   //   this function will require a new and complicated endpoint.
   // }
 
-  addNewFamilyMember(uid: number, fid: number, role: number) {
-    let addition: FamilyAddition = {
-      userId: uid,
-      familyId: fid,
-      role: role,
+  generateFamilyInvite(invitation: Relation, email: string) {
+    console.log("input", invitation)
+    let invite: Relation = {
+      familyId: invitation.familyId,
+      confirmed: invitation.confirmed,
+      role: invitation.role
     }
+    let userquery: string = `https://hsappapi.azurewebsites.net/api/users/email/${email}`
+    this.http.get(userquery).subscribe((response: User[]) => {
+      console.log("resposne to email query", response)
+      if (response.length === 0) {
+        console.log("Invited user not found.  Creating profile.")
+        let newuser: User = {
+          email: email,
+          firstName: email,
+          lastName: "",
+          photo: "",
+          minor: false,
+          parentEmail: ""
+        }
+        this.http.post('https://hsappapi.azurewebsites.net/api/users/new', newuser).subscribe((result: User) => {
+          invite.userId = result.id
+          console.log("new user invite", invite, result.id)
+          this.addNewFamilyMember(invite)
+        })
+      }
+      else if (response.length === 1) {
+        invite.userId = response[0].id
+        console.log("existing user invite", invite, response[0].id)
+        this.addNewFamilyMember(invite)
+      }
+    })
+  }
+
+  addNewFamilyMember(invite: Relation) {
+    let addition: Relation = { ...invite }
     // modify this IF later to auto-confirm user adding own minors to family
     if (this.userprofile.id === addition.userId) {
       addition.confirmed = true
     }
     else addition.confirmed = false
-    this.http.post('https://hsappapi.azurewebsites.net/api/relations/new', addition).subscribe((result: FamilyAddition) => {
+    this.http.post('https://hsappapi.azurewebsites.net/api/relations/new', addition).subscribe((result: Relation) => {
       if (result.id) {
         this.getFamilyMembers(this.fids)
         if (this.userprofile.id === result.userId) {
@@ -96,14 +131,14 @@ export class FamilyService {
   }
 
   editMemberRole(member: FamilyMember) {
-    let modified: FamilyAddition = {
+    let modified: Relation = {
       id: member.relationId,
       familyId: member.familyId,
       userId: member.id,
       role: member.relationId,
       confirmed: member.confirmed
     }
-    this.http.put(`https://hsappapi.azurewebsites.net/api/relations/edit/${modified.id}`, modified).subscribe((result: FamilyAddition) => {
+    this.http.put(`https://hsappapi.azurewebsites.net/api/relations/edit/${modified.id}`, modified).subscribe((result: Relation) => {
       if (result.id) {
         this.getFamilyMembers(this.fids)
       }
@@ -113,7 +148,7 @@ export class FamilyService {
 
   removeFamilyMember(member: FamilyMember, adminid: number) {
     if (adminid === this.userprofile.id) {
-      this.http.delete(`https://hsappapi.azurewebsites.net/api/relations/delete/${member.relationId}`).subscribe((result: FamilyAddition) => {
+      this.http.delete(`https://hsappapi.azurewebsites.net/api/relations/delete/${member.relationId}`).subscribe((result: Relation) => {
         if (result.id) {
           this.getFamilyMembers(this.fids)
         }

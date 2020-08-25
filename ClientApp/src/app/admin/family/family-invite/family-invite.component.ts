@@ -33,7 +33,7 @@ export class FamilyInviteComponent implements OnInit {
 
   generateInvite() {
     if (this.inviteForm.valid) {
-      this.invite.role = this.inviteForm.value.role
+      this.invite.role = parseInt(this.inviteForm.value.role)
       this.family.generateFamilyInvite(this.invite, this.inviteForm.value.email)
       this.dialogRef.close()
     }
