@@ -9,7 +9,8 @@ import { FamilyMember } from '../interfaces/family-member.interface';
 import { Family } from '../interfaces/family.interface'
 import { UserService } from './user.service';
 import { User } from '../interfaces/user.interface';
-import { FamilyAddition } from '../interfaces/family-addition.interface'
+import { FamilyAddition } from '../interfaces/family-addition.interface';
+import { DBError } from '../interfaces/dberror.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -56,13 +57,14 @@ export class FamilyService {
     }
     else console.log("Error: Incomplete data to create family.")
   }
+
   editFamilyData(family: Family) {
     if (family.id && family.adminId && family.name && family.adminId === this.userprofile.id) {
-      this.http.put(`https://hsappapi.azurewebsites.net/api/family/edit/${family.id}`, family).subscribe((result: Family) => {
-        if (result.id) {
-          this.user.getUserMemberships(this.userprofile.id)
+      this.http.put(`https://hsappapi.azurewebsites.net/api/family/edit/${family.id}`, family).subscribe((result: DBError | null) => {
+        if (result && result.status === 404) {
+          console.log("Family changes didn't save.")
         }
-        else console.log("Family changes didn't save.")
+        else this.user.getUserMemberships(this.userprofile.id)
       })
     }
     else console.log("Incomplete data, could not edit family.")
@@ -70,6 +72,7 @@ export class FamilyService {
   // deleteFamily(family: Family) {
   //   this function will require a new and complicated endpoint.
   // }
+
   addNewFamilyMember(uid: number, fid: number, role: number) {
     let addition: FamilyAddition = {
       userId: uid,
@@ -84,6 +87,7 @@ export class FamilyService {
       else console.log("Didn't save new relationship.")
     })
   }
+
   editMemberRole(member: FamilyMember) {
     let modified: FamilyAddition = {
       id: member.relationId,
@@ -99,6 +103,7 @@ export class FamilyService {
       else console.log("The change could not be saved.")
     })
   }
+
   removeFamilyMember(member: FamilyMember, adminid: number) {
     if (adminid === this.userprofile.id) {
       this.http.delete(`https://hsappapi.azurewebsites.net/api/relations/delete/${member.relationId}`).subscribe((result: FamilyAddition) => {

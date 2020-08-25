@@ -19,7 +19,8 @@ import { FamilyBaseComponent } from './admin/family/family-base/family-base.comp
 import { FamilyListComponent } from './admin/family/family-list/family-list.component';
 import { MinorBaseComponent } from './admin/minor/minor-base/minor-base.component';
 import { MinorControlComponent } from './admin/minor/minor-control/minor-control.component';
-import { TaskDisplayComponent } from './tasks/task-display/task-display.component'
+import { TaskDisplayComponent } from './tasks/task-display/task-display.component';
+import { FamilyEditComponent } from './admin/family/family-edit/family-edit.component'
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { TaskDisplayComponent } from './tasks/task-display/task-display.componen
     FamilyListComponent,
     MinorBaseComponent,
     MinorControlComponent,
-    TaskDisplayComponent
+    TaskDisplayComponent,
+    FamilyEditComponent
   ],
   imports: [
     BrowserModule,

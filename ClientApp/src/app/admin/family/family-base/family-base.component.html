@@ -1,5 +1,7 @@
 <div class="">
-    <div *ngIf="this.membership" class="">Family: {{membership.name}}, Your Role: {{membership.role}}</div>
+    <div *ngIf="this.membership" class="">Family: {{membership.name}}<button mat-mini-fab color="primary"
+            *ngIf="this.membership.adminId === this.user.id" (click)="editFamily(this.membership)">E</button>
+    </div>
     <ng-container *ngIf="this.familymembers.length > 0">
         <div class="" *ngFor="let member of familymembers">
             <app-family-list [viewuid]="member.id" [viewfid]="displayfid"></app-family-list>

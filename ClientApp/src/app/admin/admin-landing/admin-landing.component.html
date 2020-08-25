@@ -1,18 +1,23 @@
 <div class="admin-flex">
     <div class="admin-profile">
-        <img *ngIf="user.photo" src="{{user.photo}}">
-        <p *ngIf="user">{{user.firstName}} <button mat-raised-button color="primary">New Fam</button></p>
-    </div>
-    <ng-container *ngIf="fids.length > 0">
-        <div *ngFor="let fid of fids, index as i" class="admin-family">
-            <app-family-base [displayfid]=fids[i]></app-family-base>
+        <div *ngIf="user.photo" class="admin-photo">
+            <img class="admin-photo" src="{{user.photo}}">
         </div>
-    </ng-container>
+        <p *ngIf="user">{{user.firstName}} </p>
+    </div>
+    <div class="admin-family">
+        <ng-container *ngIf="fids.length > 0">
+            <div *ngFor="let fid of fids, index as i" class="admin-family">
+                <app-family-base [displayfid]=fids[i]></app-family-base>
+            </div>
+        </ng-container>
+    </div>
     <ng-container *ngIf="minorids.length > 0">
-        <div><p>Your Minors:</p>
-        <div *ngFor="let minor of minorids, index as i" class="">
-            <app-minor-base [viewmid]=minorids[i].id></app-minor-base>
+        <div>
+            <p>Your Minors:</p>
+            <div *ngFor="let minor of minorids, index as i" class="">
+                <app-minor-base [viewmid]=minorids[i].id></app-minor-base>
+            </div>
         </div>
-    </div>
     </ng-container>
 </div>

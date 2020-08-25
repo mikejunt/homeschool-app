@@ -5,6 +5,10 @@ import { FamilyMember } from 'src/app/interfaces/family-member.interface';
 import { Store } from '@ngrx/store';
 import { RootState } from 'src/app/store';
 import * as Selectors from '../../../store/selectors'
+import { FamilyEditComponent } from '../family-edit/family-edit.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Family } from 'src/app/interfaces/family.interface';
+import { User } from 'src/app/interfaces/user.interface';
 
 @Component({
   selector: 'app-family-base',
@@ -17,23 +21,38 @@ export class FamilyBaseComponent implements OnInit {
   membership: UserMembership
   familymembers$: Observable<FamilyMember[]>
   familymembers: FamilyMember[]
+  user$: Observable<User>
+  user: User
 
-  constructor(private store: Store<RootState>) {
+  constructor(private store: Store<RootState>, public dialog: MatDialog) {
     this.memberships$ = this.store.select(Selectors.getUserMemberships)
     this.familymembers$ = this.store.select(Selectors.getFamilyMembers)
-   }
+    this.user$ = this.store.select(Selectors.getUserInfo)
+  }
 
   ngOnInit(): void {
     this.memberships$.subscribe((state: UserMembership[]) => {
       let filtered = [...state.filter((family: UserMembership) => family.familyId === this.displayfid)]
-      console.log("FID:", this.displayfid, "FamData:", filtered)
       this.membership = filtered[0]
     })
     this.familymembers$.subscribe((state: FamilyMember[]) => {
       let filtered = [...state.filter((member: FamilyMember) => member.familyId === this.displayfid)]
-      console.log("FID:", this.displayfid, "Members:", filtered)
       this.familymembers = filtered
     })
+    this.user$.subscribe((state: User) => [
+      this.user = state
+    ])
+  }
+
+  editFamily(family: UserMembership) {
+    if (this.user.id === family.adminId) {
+      let targetfamily: Family = {
+        adminId: family.adminId,
+        id: family.familyId,
+        name: family.name,
+      }
+      this.dialog.open(FamilyEditComponent, { data: targetfamily })
+    }
   }
 
 }
