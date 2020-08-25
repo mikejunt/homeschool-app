@@ -1,0 +1,15 @@
+.dialog-container {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    max-width: 480px;
+    height: 200px;
+}
+
+.dialog-flex {
+    flex: 0 0 100%;
+}
+
+.dialog-min-width {
+    min-width: 320px;
+}

@@ -1,15 +1,17 @@
-<h2 mat-dialog-title>Edit Family Name</h2>
-<div mat-dialog-content class="">
-    <form class="" [formGroup]="familyForm">
-        <mat-form-field class="">
-            <mat-label>Family Name:</mat-label>
-            <input matInput formControlName="name" placeholder="Name of family" type="text">
-            <mat-hint>Minimum 4 characters.  Try "The xxx" format if too short."</mat-hint>
-            <mat-error>Family names must be 4 characters.</mat-error>
-        </mat-form-field>
-    </form>
-</div>
-<div mat-dialog-actions class="">
-    <button mat-raised-button color="primary" class="submit" [class.disabled]="familyForm.valid" type="submit" (click)="saveFamily()">Save</button>
-    <button mat-raised-button color="warn" type="submit" (click)="closeEdit()"></button>
+<div class="dialog-container dialog-min-width">
+    <h2 mat-dialog-title class="dialog-flex">Edit Family Name</h2>
+    <div mat-dialog-content class="dialog-flex">
+        <form class="dialog-min-width" [formGroup]="familyForm">
+            <mat-form-field class="dialog-min-width">
+                <mat-label>Family Name:</mat-label>
+                <input matInput formControlName="name" placeholder="Name of family" type="text">
+                <mat-hint>Must be 4-20 characters. Consider adding "The" for 2-3 character surnames.</mat-hint>
+            </mat-form-field>
+        </form>
+    </div>
+    <div mat-dialog-actions class="dialog-flex">
+        <button mat-raised-button color="primary" class="" [disabled]="!familyForm.valid" type="submit"
+            (click)="saveFamily()">Save</button>
+        <button mat-raised-button color="warn" type="submit" (click)="closeEdit()">Cancel</button>
+    </div>
 </div>

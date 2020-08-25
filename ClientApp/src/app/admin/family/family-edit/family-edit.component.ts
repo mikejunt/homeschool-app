@@ -23,7 +23,7 @@ export class FamilyEditComponent implements OnInit {
       id: this.data.id
     }
     this.familyForm = this.forms.group({
-      name: ["", Validators.minLength(4)]
+      name: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(20)]]
     })
     if (this.data.name.length > 0) {
       this.familyForm.patchValue({
@@ -36,6 +36,7 @@ export class FamilyEditComponent implements OnInit {
     if (this.familyForm.valid) {
       this.subFamily.name = this.familyForm.value.name
       this.family.editFamilyData(this.subFamily)
+      this.closeEdit()
     }
   }
 
