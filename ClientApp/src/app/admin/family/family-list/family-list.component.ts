@@ -21,9 +21,7 @@ export class FamilyListComponent implements OnInit {
   }
   ngOnInit(): void {
     this.familymembers$.subscribe((state: FamilyMember[]) => {
-      console.log("Recieved:", state)
       let filtered = state.filter((member: FamilyMember) => member.id === this.viewuid && member.familyId === this.viewfid)
-      console.log("UID:", this.viewuid, "FID:", this.viewfid, "Result:", filtered)
       this.familymember = filtered[0]
     })
   }
