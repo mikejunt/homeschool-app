@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { Auth0UserProfile } from '../interfaces/auth0user.interface';
 import { User } from '../interfaces/user.interface';
 import * as Actions from '../store/actions';
-import { FamilyService } from './family.service';
 import { MinorService } from './minor.service';
 import { TasksService } from './tasks.service';
 import { UserMembership } from '../interfaces/user-membership.interface';
@@ -20,7 +19,7 @@ export class UserService {
   user$: Observable<Object>
 
   constructor(private store: Store<RootState>, private http: HttpClient, private auth: AuthService,
-    private family: FamilyService, private minors: MinorService, private tasks: TasksService) { }
+     private minors: MinorService, private tasks: TasksService) { }
 
   handleAuthenticatedUser() {
     this.user$ = this.auth.getUser$()
