@@ -22,7 +22,7 @@ export class FamilyCreateComponent implements OnInit {
       adminId: this.data.adminId,
     }
     this.familyForm = this.forms.group({
-      name: ["", Validators.minLength(4)]
+      name: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(20)]]
     })
   }
 
