@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import createAuth0Client from '@auth0/auth0-spa-js';
 import Auth0Client from '@auth0/auth0-spa-js/dist/typings/Auth0Client';
-import { from, of, Observable, BehaviorSubject, throwError, iif } from 'rxjs';
+import { from, of, Observable, BehaviorSubject, throwError, iif, combineLatest } from 'rxjs';
 import { tap, catchError, concatMap, shareReplay, map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -65,21 +65,29 @@ export class AuthService {
           appState: { target: redirectPath }
         })));
   }
-  handleAuthCallback(): Observable<{ loggedIn: boolean, targetUrl: string }> {
-    return of(window.location.search).pipe(
-      concatMap(params => {
-        if (params.includes('error=')) {this.router.navigate(['/unauthorized'])}
-        return iif(() => params.includes('code=') && params.includes('state='),
-          this.handleRedirectCallback$.pipe(concatMap(cbRes =>
-            this.isAuthenticated$.pipe(take(1),
 
-              map(loggedIn => ({
-                loggedIn,
-                targetUrl: cbRes.appState && cbRes.appState.target ? cbRes.appState.target : '/'
-              }))))),
-          this.isAuthenticated$.pipe(take(1), map(loggedIn => ({ loggedIn, targetUrl: null }))))
-      }));
+  handleAuthCallback() {
+    const params = window.location.search;
+    if (params.includes('code=') && params.includes('state=')) {
+      let targetRoute: string;
+      const authComplete$ = this.handleRedirectCallback$.pipe(
+        tap(cbRes => {
+          targetRoute = cbRes.appState && cbRes.appState.target ? cbRes.appState.target : '/';
+        }),
+        concatMap(() => {
+          return combineLatest([
+            this.getUser$(),
+            this.isAuthenticated$
+          ]);
+        })
+      );
+      authComplete$.subscribe(([user, loggedIn]) => {
+        this.router.navigate([targetRoute]);
+      });
+      return authComplete$
+    }
   }
+  
   logout() {
     this.auth0Client$.subscribe((client: Auth0Client) => {
       client.logout({

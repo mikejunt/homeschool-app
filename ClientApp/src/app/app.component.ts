@@ -16,7 +16,7 @@ export class AppComponent {
     ) { }
 
   ngAfterViewInit(){
-    setTimeout(() => this.router.navigate([`${window.location.pathname}`]),1000)
+    // setTimeout(() => this.router.navigate([`${window.location.pathname}`]),1000)
   }
 
 }
