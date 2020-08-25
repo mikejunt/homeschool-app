@@ -5,6 +5,7 @@ import * as Selectors from '../../store/selectors';
 import * as Actions from '../../store/actions';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user.interface';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,7 +16,7 @@ export class ToolbarComponent implements OnInit {
   user$: Observable<User>
   user: User
 
-  constructor(private store: Store<RootState>) {
+  constructor(private store: Store<RootState>, private auth: AuthService) {
     this.user$ = this.store.select(Selectors.getUserInfo) }
 
   ngOnInit(): void {
@@ -25,6 +26,7 @@ export class ToolbarComponent implements OnInit {
 
   logOutUser() {
     this.store.dispatch(Actions.clearUser())
+    this.auth.logout()
   }
 
 }
