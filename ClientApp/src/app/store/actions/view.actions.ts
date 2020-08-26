@@ -5,7 +5,7 @@ export const setViewedUser = createAction(
     "[VIEW STATE] Set Viewed User ID",
     props<{ uid: number }>()
 );
-export const seViewedFamily = createAction(
+export const setViewedFamily = createAction(
     "[VIEW STATE] Set Viewed Family ID",
     props<{ fid: number }>()
 );

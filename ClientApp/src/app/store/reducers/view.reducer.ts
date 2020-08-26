@@ -13,7 +13,7 @@ export const initialViewState: ViewState = {
 
 const reducer = createReducer(initialViewState,
     on(viewActions.setViewedUser, (state, { uid }) => ({ ...state, viewuser: uid })),
-    on(viewActions.seViewedFamily, (state, { fid }) => ({...state, viewfamily: fid})),
+    on(viewActions.setViewedFamily, (state, { fid }) => ({...state, viewfamily: fid})),
     on(viewActions.clearViews, (state) => ({ ...initialViewState }))
 );
 

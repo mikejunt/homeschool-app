@@ -7,20 +7,20 @@
     </div>
     <div *ngIf="this.parents.length > 0">
         <span>Parents</span>
-        <div class="" *ngFor="let parent of parents">
-            <app-family-list [viewuid]="parent.id" [viewfid]="displayfid"></app-family-list>
+        <div class="" *ngFor="let parent of parents; index as i">
+            <app-family-list [index]="i+2" [viewuid]="parent.id" [viewfid]="displayfid"></app-family-list>
         </div>
     </div>
     <div *ngIf="this.adults.length > 0">
         <span>Adults</span>
-        <div class="" *ngFor="let adult of adults">
-            <app-family-list [viewuid]="adult.id" [viewfid]="displayfid"></app-family-list>
+        <div class="" *ngFor="let adult of adults; index as i">
+            <app-family-list [index]="i+2" [viewuid]="adult.id" [viewfid]="displayfid"></app-family-list>
         </div>
     </div>
     <div *ngIf="this.children.length > 0">
         <span>Children</span>
-        <div class="" *ngFor="let child of children">
-            <app-family-list [viewuid]="child.id" [viewfid]="displayfid"></app-family-list>
+        <div class="" *ngFor="let child of children; index as i">
+            <app-family-list [index]="i+2" [viewuid]="child.id" [viewfid]="displayfid"></app-family-list>
         </div>
     </div>
 </div>

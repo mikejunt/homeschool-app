@@ -1,3 +1,4 @@
 <div class="">
-    <div class="" *ngIf="familymember">{{familymember.firstName}} {{familymember.lastName}} - {{familymember.role}}</div>
+    <button mat-raised-button color="accent" (click)="navigate()" [disabled]="!familymember.confirmed" class=""
+        *ngIf="familymember">{{familymember.firstName}} {{familymember.lastName}}</button>
 </div>
