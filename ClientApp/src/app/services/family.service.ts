@@ -22,10 +22,13 @@ export class FamilyService {
   fids: number[]
   userprofile$: Observable<User>
   userprofile: User
+  minorprofiles$: Observable<User[]>
+  mids: number[]
 
   constructor(private store: Store<RootState>, private http: HttpClient, private user: UserService, private minors: MinorService) {
     this.fids$ = this.store.select(Selectors.getFids)
     this.userprofile$ = this.store.select(Selectors.getUserInfo)
+    this.minorprofiles$ = this.store.select(Selectors.getMinorProfiles)
     this.fids$.subscribe((fids: number[]) => {
       if (fids.length > 0) {
         this.getFamilyMembers(fids)
@@ -34,6 +37,11 @@ export class FamilyService {
     })
     this.userprofile$.subscribe((user: User) => {
       this.userprofile = user
+    })
+    this.minorprofiles$.subscribe((state: User[]) => {
+      let mids: number[] = []
+      state.forEach((minor: User) => mids.push(minor.id))
+      this.mids = mids
     })
   }
 
@@ -127,6 +135,9 @@ export class FamilyService {
         if (this.userprofile.id === result.userId) {
           this.user.getUserMemberships(this.userprofile.id)
         }
+        if (this.mids.includes(result.userId)) {
+          this.minors.getUsersMinors(this.userprofile.email)
+        }
       }
       else console.log("Didn't save new relationship.")
     })
@@ -150,11 +161,13 @@ export class FamilyService {
 
   removeFamilyMember(membership: UserMembership, minor: boolean) {
     this.http.delete(`https://hsappapi.azurewebsites.net/api/relations/delete/${membership.relationId}`).subscribe((result: Relation) => {
-      if (result.id && !minor) {
-        this.getFamilyMembers(this.fids)
-      }
-      else if (result.id && minor) {
-        this.minors.getUsersMinors(this.userprofile.email)
+      if (result.id) {
+        if (!minor || this.fids.includes(result.familyId)) {
+          this.getFamilyMembers(this.fids)
+        }
+        if (minor) {
+          this.minors.getUsersMinors(this.userprofile.email)
+        }
       }
       else console.log("Could not delete the membership.")
     })
