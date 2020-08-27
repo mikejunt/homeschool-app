@@ -11,6 +11,8 @@ import { UserService } from './user.service';
 import { User } from '../interfaces/user.interface';
 import { Relation } from '../interfaces/relation.interface';
 import { DBError } from '../interfaces/dberror.interface';
+import { UserMembership } from '../interfaces/user-membership.interface';
+import { MinorService } from './minor.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,7 @@ export class FamilyService {
   userprofile$: Observable<User>
   userprofile: User
 
-  constructor(private store: Store<RootState>, private http: HttpClient, private user: UserService) {
+  constructor(private store: Store<RootState>, private http: HttpClient, private user: UserService, private minors: MinorService) {
     this.fids$ = this.store.select(Selectors.getFids)
     this.userprofile$ = this.store.select(Selectors.getUserInfo)
     this.fids$.subscribe((fids: number[]) => {
@@ -130,30 +132,31 @@ export class FamilyService {
     })
   }
 
-  editMemberRole(member: FamilyMember) {
-    let modified: Relation = {
-      id: member.relationId,
-      familyId: member.familyId,
-      userId: member.id,
-      role: member.relationId,
-      confirmed: member.confirmed
-    }
-    this.http.put(`https://hsappapi.azurewebsites.net/api/relations/edit/${modified.id}`, modified).subscribe((result: Relation) => {
-      if (result.id) {
-        this.getFamilyMembers(this.fids)
-      }
-      else console.log("The change could not be saved.")
-    })
-  }
-
-  removeFamilyMember(member: FamilyMember, adminid: number) {
-    if (adminid === this.userprofile.id) {
-      this.http.delete(`https://hsappapi.azurewebsites.net/api/relations/delete/${member.relationId}`).subscribe((result: Relation) => {
-        if (result.id) {
-          this.getFamilyMembers(this.fids)
+  editMembership(member: Relation, minor: boolean) {
+    if (member.id && member.userId && member.familyId && member.role) {
+      this.http.put(`https://hsappapi.azurewebsites.net/api/relations/edit/${member.id}`, member).subscribe((result: DBError | null) => {
+        if (result) {
+          console.log("The query encountered an error.", console.log(result))
         }
-        else console.log("Could not delete the membership.")
+        else {
+          this.getFamilyMembers(this.fids)
+          if (minor) {
+            this.minors.getUsersMinors(this.userprofile.email)
+          }
+        }
       })
     }
+  }
+
+  removeFamilyMember(membership: UserMembership, minor: boolean) {
+    this.http.delete(`https://hsappapi.azurewebsites.net/api/relations/delete/${membership.relationId}`).subscribe((result: Relation) => {
+      if (result.id && !minor) {
+        this.getFamilyMembers(this.fids)
+      }
+      else if (result.id && minor) {
+        this.minors.getUsersMinors(this.userprofile.email)
+      }
+      else console.log("Could not delete the membership.")
+    })
   }
 }
