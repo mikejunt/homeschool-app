@@ -29,13 +29,11 @@ export class MinorBaseComponent implements OnInit {
   ngOnInit(): void {
     this.minorprofiles$.subscribe((state: User[]) => {
       let filtered = state.filter((minor: User) => minor.id === this.viewmid)
-      console.log("Minor ID:", this.viewmid, "Profile:", filtered[0])
       this.minor = filtered[0]
     })
     this.minorfamilies$.subscribe((state: UserMembership[]) => {
       let filtered = state.filter((membership: UserMembership) => !membership.confirmed)
       this.minorinvites = filtered.length
-      console.log(filtered)
     })
   }
 
