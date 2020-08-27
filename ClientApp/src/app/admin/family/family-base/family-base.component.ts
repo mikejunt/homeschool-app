@@ -41,7 +41,7 @@ export class FamilyBaseComponent implements OnInit {
     })
     this.familymembers$.subscribe((state: FamilyMember[]) => {
       this.parents = [...state.filter((member: FamilyMember) => {
-        return member.familyId === this.displayfid && member.role === 1 || member.role === 2
+        return member.familyId === this.displayfid && (member.role === 1 || member.role === 2)
       })]
       this.adults = [...state.filter((member: FamilyMember) => {
         return member.familyId === this.displayfid && member.role === 3
