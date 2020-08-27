@@ -1,0 +1,16 @@
+.admin-photo {
+    width: 100%;
+    max-width: 128px;
+    height: 100%;
+    max-height: 128px;
+    border-radius: 8px;
+}
+
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.flex-photo {
+    flex: 0 0 128px;
+}

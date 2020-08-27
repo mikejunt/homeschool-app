@@ -1,5 +1,17 @@
-<div>
-    <p>Task Base Component</p>
-    <span *ngIf="viewuid >0 && viewfid > 0">Viewing user {{viewuid}} in family {{viewfid}}, they are
-        {{viewmember.firstName}}</span>
+<div class="">
+    <div *ngIf="viewmember.id" class="">
+        <h2 class="">{{viewfamily.name}} </h2>
+        <h4 class="">{{viewmember.firstName}}: {{roletext[viewmember.role-1]}}</h4>
+        <div class="flex-container">
+            <div class="admin-photo flex-photo" *ngIf="viewmember.photo.length > 0">
+                <img *ngIf="viewmember.photo.length > 0" src="{{viewmember.photo}}" class="admin-photo"></div>
+            <div class="flex-data">
+                <button *ngIf="!viewmember.confirmed && viewmember.id === userprofile.id" mat-raised-button
+                    color="primary" (click)="acceptInvite()">Accept</button>
+                <button *ngIf="(viewmember.id === userprofile.id && viewfamily.adminId != userprofile.id) || (viewfamily.adminId === userprofile.id && viewmember.id != userprofile.id)"
+                    mat-raised-button color="warn"
+                    (click)="removeMember()">{{userprofile.id === viewfamily.adminId? "Remove":"Leave"}}</button>
+            </div>
+        </div>
+    </div>
 </div>
