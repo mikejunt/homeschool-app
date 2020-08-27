@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'admin', component: LandingComponent, canActivate: [AuthGuard], children: [
     { path: 'tasks', component: TaskBaseComponent, canActivate: [AuthGuard] },
-    { path: 'minors/:id', component: MinorControlComponent, canActivate: [AuthGuard] },
+    { path: 'minors', component: MinorControlComponent, canActivate: [AuthGuard] },
     { path: '', redirectTo: 'tasks', pathMatch: 'prefix'}
   ] },
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },

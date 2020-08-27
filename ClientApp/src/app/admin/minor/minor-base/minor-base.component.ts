@@ -3,7 +3,10 @@ import { Store } from '@ngrx/store';
 import { RootState } from 'src/app/store';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/interfaces/user.interface';
-import * as Selectors from '../../../store/selectors'
+import * as Selectors from '../../../store/selectors';
+import * as Actions from '../../../store/actions';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UserMembership } from 'src/app/interfaces/user-membership.interface';
 
 @Component({
   selector: 'app-minor-base',
@@ -14,10 +17,14 @@ export class MinorBaseComponent implements OnInit {
   @Input() viewmid: number
   minorprofiles$: Observable<User[]>
   minor: User
+  minorfamilies$: Observable<UserMembership[]>
+  minorinvites: number
 
-  constructor(private store: Store<RootState>) {
+
+  constructor(private store: Store<RootState>, private router: Router, private actr: ActivatedRoute) {
     this.minorprofiles$ = this.store.select(Selectors.getMinorProfiles)
-   }
+    this.minorfamilies$ = this.store.select(Selectors.getMinorMemberships)
+  }
 
   ngOnInit(): void {
     this.minorprofiles$.subscribe((state: User[]) => {
@@ -25,6 +32,16 @@ export class MinorBaseComponent implements OnInit {
       console.log("Minor ID:", this.viewmid, "Profile:", filtered[0])
       this.minor = filtered[0]
     })
+    this.minorfamilies$.subscribe((state: UserMembership[]) => {
+      let filtered = state.filter((membership: UserMembership) => !membership.confirmed)
+      this.minorinvites = filtered.length
+      console.log(filtered)
+    })
+  }
+
+  navigate() {
+    this.store.dispatch(Actions.setViewedUser({ uid: this.viewmid }))
+    this.router.navigate(['minors'], { relativeTo: this.actr })
   }
 
 }
