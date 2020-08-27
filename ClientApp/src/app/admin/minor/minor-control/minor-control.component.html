@@ -6,7 +6,7 @@
                 <img *ngIf="viewminor.photo.length > 0" src="{{viewminor.photo}}" class="admin-photo"></div>
             <div class="flex-data">
                 <p>{{viewminor.email}}</p>
-                <mat-slide-toggle color="warn" [ngModel]="viewminor.minor" (click)="revokeMinor()"
+                <mat-slide-toggle color="warn" [(ngModel)]="viewminor.minor" (click)="revokeMinor()"
                     [disabled]="!viewminor.minor">Toggle to remove minor status</mat-slide-toggle>
             </div>
             <div *ngIf="viewmemberships.length > 0" class="flex-full">
