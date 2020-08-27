@@ -5,3 +5,19 @@
     max-height: 128px;
     border-radius: 8px;
 }
+
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.flex-photo {
+    flex: 0 0 128px;
+}
+.flex-full {
+    flex: 0 0 100%;
+}
+
+.flex-data {
+    flex: 1 1 75%;
+}
