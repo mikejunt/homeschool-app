@@ -162,12 +162,13 @@ export class FamilyService {
   removeFamilyMember(membership: UserMembership, minor: boolean) {
     this.http.delete(`https://hsappapi.azurewebsites.net/api/relations/delete/${membership.relationId}`).subscribe((result: Relation) => {
       if (result.id) {
-        if (!minor || this.fids.includes(result.familyId)) {
-          this.getFamilyMembers(this.fids)
-        }
         if (minor) {
           this.minors.getUsersMinors(this.userprofile.email)
         }
+        else if (!minor && membership.adminId != this.userprofile.id)
+        this.user.getUserMemberships(this.userprofile.id)
+        else if (!minor && membership.adminId === this.userprofile.id)
+        this.getFamilyMembers(this.fids)
       }
       else console.log("Could not delete the membership.")
     })
