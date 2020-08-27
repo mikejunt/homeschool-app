@@ -1,1 +1,18 @@
-<p>minor-control works!</p>
+<div class="">
+    <div *ngIf="viewminor.id" class="">
+        <h2 class="">Minor Administration for {{viewminor.firstName}} {{viewminor.lastName}}</h2>
+        <div class="admin-photo">
+            <img *ngIf="viewminor.photo.length > 0" src="{{viewminor.photo}}" class="admin-photo">
+            <p>{{viewminor.email}}</p>
+            <mat-slide-toggle color="warn" [ngModel]="viewminor.minor" (click)="revokeMinor()" [disabled]="!viewminor.minor">Toggle to remove minor status</mat-slide-toggle>
+        </div>
+        <div *ngIf="viewmemberships.length > 0" class="">
+            <h4>{{viewminor.firstName}}'s current family memberships:</h4>
+            <p *ngFor="let member of viewmemberships">Family: {{member.name}} Role: {{member.role}} <button mat-raised-button color="warn" (click)="endMembership(member)">Remove</button></p>
+        </div>
+        <div *ngIf="viewinvites.length > 0"class="">
+            <h4>{{viewminor.firstName}}'s pending invitations:</h4>
+            <p *ngFor="let invite of viewinvites">Family: {{invite.name}}, Role: {{invite.role}} <button mat-raised-button color="primary" (click)="acceptInvite(invite)">Accept</button></p>
+        </div>
+    </div>
+</div>
