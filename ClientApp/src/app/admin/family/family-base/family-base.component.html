@@ -1,26 +1,26 @@
 <div class="">
-    <div *ngIf="this.membership" class="">Family: {{membership.name}}
-        <button mat-mini-fab color="primary" *ngIf="this.membership.adminId === this.user.id"
-            (click)="editFamily(this.membership)">Ed</button>
-        <button mat-mini-fab color="accent" *ngIf="this.membership.role === 1 || this.membership.role === 2"
+    <div *ngIf="membership" class="">Family: {{membership.name}}
+        <button mat-mini-fab color="primary" *ngIf="membership.adminId === user.id"
+            (click)="editFamily(membership)">Ed</button>
+        <button mat-mini-fab color="accent" *ngIf="membership.role === 1 || membership.role === 2"
             (click)="inviteMember()">+1</button>
     </div>
-    <div *ngIf="this.parents.length > 0">
+    <div *ngIf="parents.length > 0">
         <span>Parents</span>
         <div class="" *ngFor="let parent of parents; index as i">
-            <app-family-list [index]="i+2" [viewuid]="parent.id" [viewfid]="displayfid"></app-family-list>
+            <app-family-list [index]="i+2" [viewuid]="parent.id" [viewfam]="membership"></app-family-list>
         </div>
     </div>
-    <div *ngIf="this.adults.length > 0">
+    <div *ngIf="adults.length > 0">
         <span>Adults</span>
         <div class="" *ngFor="let adult of adults; index as i">
-            <app-family-list [index]="i+2" [viewuid]="adult.id" [viewfid]="displayfid"></app-family-list>
+            <app-family-list [index]="i+2" [viewuid]="adult.id" [viewfam]="membership"></app-family-list>
         </div>
     </div>
-    <div *ngIf="this.children.length > 0">
+    <div *ngIf="children.length > 0">
         <span>Children</span>
         <div class="" *ngFor="let child of children; index as i">
-            <app-family-list [index]="i+2" [viewuid]="child.id" [viewfid]="displayfid"></app-family-list>
+            <app-family-list [index]="i+2" [viewuid]="child.id" [viewfam]="membership"></app-family-list>
         </div>
     </div>
 </div>

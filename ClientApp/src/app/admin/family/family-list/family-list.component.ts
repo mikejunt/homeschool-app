@@ -7,6 +7,7 @@ import * as Selectors from '../../../store/selectors';
 import * as Actions from '../../../store/actions';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/interfaces/user.interface';
+import { UserMembership } from 'src/app/interfaces/user-membership.interface';
 
 @Component({
   selector: 'app-family-list',
@@ -15,7 +16,7 @@ import { User } from 'src/app/interfaces/user.interface';
 })
 export class FamilyListComponent implements OnInit {
   @Input() viewuid: number
-  @Input() viewfid: number
+  @Input() viewfam: UserMembership
   @Input() index: number
   familymembers$: Observable<FamilyMember[]>
   familymember: FamilyMember
@@ -28,7 +29,9 @@ export class FamilyListComponent implements OnInit {
   }
   ngOnInit(): void {
     this.familymembers$.subscribe((state: FamilyMember[]) => {
-      let filtered = state.filter((member: FamilyMember) => member.id === this.viewuid && member.familyId === this.viewfid)
+      let filtered = state.filter((member: FamilyMember) => {
+        return member.id === this.viewuid && member.familyId === this.viewfam.familyId
+      })
       this.familymember = filtered[0]
     })
     this.user$.subscribe((state: User) => {
@@ -36,9 +39,10 @@ export class FamilyListComponent implements OnInit {
     })
   }
   navigate() {
-    this.store.dispatch(Actions.setViewedUser({uid: this.viewuid}))
-    this.store.dispatch(Actions.setViewedFamily({fid: this.viewfid}))
-    this.router.navigate(['tasks'], {relativeTo: this.actr})
+    this.store.dispatch(Actions.setViewedUser({ uid: this.viewuid }))
+    this.store.dispatch(Actions.setViewedFamily({ fid: this.viewfam.familyId }))
+    this.router.navigate(['tasks'], { relativeTo: this.actr })
   }
+
 
 }
