@@ -7,14 +7,16 @@ import { LandingComponent } from './shared/landing/landing.component';
 import { TaskBaseComponent } from './tasks/task-base/task-base.component';
 import { MinorControlComponent } from './admin/minor/minor-control/minor-control.component';
 import { ViewGuard } from './guards/view.guard';
+import { ProfileComponent } from './admin/profile/profile.component';
 
 
 const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: 'admin', component: LandingComponent, canActivate: [AuthGuard], children: [
-    { path: 'tasks', component: TaskBaseComponent, canActivate: [AuthGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+    { path: 'tasks', component: TaskBaseComponent, canActivate: [AuthGuard, ViewGuard] },
     { path: 'minors', component: MinorControlComponent, canActivate: [AuthGuard, ViewGuard] },
-    { path: '', redirectTo: 'tasks', pathMatch: 'prefix'}
+    { path: '', redirectTo: 'profile', pathMatch: 'prefix'}
   ] },
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: '**', component: ErrorComponent }

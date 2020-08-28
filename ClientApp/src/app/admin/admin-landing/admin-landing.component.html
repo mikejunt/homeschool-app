@@ -1,12 +1,15 @@
 <div class="admin-flex">
     <div class="admin-profile">
         <div *ngIf="user.photo" class="admin-photo">
-            <img class="admin-photo" src="{{user.photo}}">
+            <a routerLink="/admin">
+                <img class="admin-photo" src="{{user.photo}}">
+            </a>
         </div>
         <p *ngIf="user">{{user.firstName}} </p>
     </div>
     <div class="admin-family">
-        <p>Your Memberships <button *ngIf="!user.minor" mat-mini-fab color="primary" (click)="newFamily()">+</button></p>
+        <p>Your Memberships <button *ngIf="!user.minor" mat-mini-fab color="primary" (click)="newFamily()">+</button>
+        </p>
         <ng-container *ngIf="fids.length > 0">
             <div *ngFor="let fid of fids, index as i" class="admin-family">
                 <app-family-base [displayfid]=fids[i]></app-family-base>
