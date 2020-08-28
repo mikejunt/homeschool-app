@@ -10,6 +10,8 @@ import { map } from 'rxjs/operators';
 import * as qclone from 'qclone';
 import { Relation } from 'src/app/interfaces/relation.interface';
 import { FamilyService } from 'src/app/services/family.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MinorDialogComponent } from '../minor-dialog/minor-dialog.component';
 
 @Component({
   selector: 'app-minor-control',
@@ -25,7 +27,7 @@ export class MinorControlComponent implements OnInit {
   viewinvites: UserMembership[]
   viewmemberships: UserMembership[]
 
-  constructor(private store: Store<RootState>, private minors: MinorService, private family: FamilyService) {
+  constructor(private store: Store<RootState>, private family: FamilyService, public dialog: MatDialog, ) {
     this.viewuid$ = this.store.select(Selectors.getViewedUser)
     this.minorprofiles$ = this.store.select(Selectors.getMinorProfiles)
     this.minormemberships$ = this.store.select(Selectors.getMinorMemberships)
@@ -53,7 +55,7 @@ export class MinorControlComponent implements OnInit {
   }
 
   revokeMinor() {
-    console.log(this.viewminor)
+    this.dialog.open(MinorDialogComponent, {data: this.viewminor})
   }
 
   endMembership(membership: UserMembership) {

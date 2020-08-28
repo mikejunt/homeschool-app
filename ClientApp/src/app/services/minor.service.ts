@@ -57,14 +57,14 @@ export class MinorService {
     })
   }
 
-  makeUserAdult(user: User) {
-    if (user.parentEmail === this.userprofile.email) {
+  makeUserAdult(minor: User) {
+    if (minor.parentEmail === this.userprofile.email) {
       let newAdult: User = {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        photo: user.photo,
+        id: minor.id,
+        email: minor.email,
+        firstName: minor.firstName,
+        lastName: minor.lastName,
+        photo: minor.photo,
         minor: false,
         parentEmail: "",
       }
