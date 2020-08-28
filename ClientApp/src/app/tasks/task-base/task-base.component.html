@@ -1,20 +1,25 @@
 <div class="">
     <div *ngIf="viewmember.id" class="">
-        <h2 class="">{{viewfamily.name}} </h2>
-        <h4 class="">{{viewmember.firstName}}: {{roletext[viewmember.role-1]}}</h4>
         <div class="flex-container">
             <div class="admin-photo flex-photo" *ngIf="viewmember.photo">
-                <img *ngIf="viewmember.photo.length > 0" src="{{viewmember.photo}}" class="admin-photo"></div>
-            <div class="flex-data">
-                <div class="" *ngIf="!userprofile.minor && !viewmember.confirmed && viewmember.id === userprofile.id">
+                <img *ngIf="viewmember.photo.length > 0" src="{{viewmember.photo}}" class="admin-photo">
+            </div>
+            <div class="flex-headings">
+                <h2 class="">{{viewmember.firstName}}</h2>
+                <h4 class="">{{viewfamily.name}}: {{roletext[viewmember.role-1]}}</h4>
+            </div>
+            <div class="flex-full flex-container">
+                <div class="flex-controls"
+                    *ngIf="!userprofile.minor && !viewmember.confirmed && viewmember.id === userprofile.id">
                     <button mat-raised-button color="primary" (click)="modifyMember()">Accept Invite</button>
                 </div>
-                <div class=""
+                <div class="flex-controls"
                     *ngIf="!userprofile.minor && (viewmember.id === userprofile.id && viewfamily.adminId != userprofile.id) || (viewfamily.adminId === userprofile.id && viewmember.id != userprofile.id)">
                     <button mat-raised-button color="warn"
                         (click)="removeMember()">{{!viewmember.confirmed && userprofile.id === viewmember.id? "Reject":userprofile.id === viewfamily.adminId? "Remove Member":"Leave Group"}}</button>
                 </div>
-                <div class="" *ngIf="viewuid != userprofile.id && viewfamily.confirmed && (viewfamily.role === 1 || viewfamily.role === 2)">
+                <div class="flex-controls"
+                    *ngIf="viewuid != userprofile.id && viewfamily.confirmed && (viewfamily.role === 1 || viewfamily.role === 2)">
                     <mat-form-field>
                         <mat-label>Change Role</mat-label>
                         <mat-select [(ngModel)]="roleselect">
@@ -31,4 +36,5 @@
             </div>
         </div>
     </div>
+    <app-task-display></app-task-display>
 </div>

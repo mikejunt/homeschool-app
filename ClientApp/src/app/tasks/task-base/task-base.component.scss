@@ -11,6 +11,16 @@
     flex-flow: row wrap;
 }
 
+.flex-headings {
+    flex: 1 1 75%;
+}
+
 .flex-photo {
     flex: 0 0 128px;
+}
+.flex-full {
+    flex: 0 0 100%;
+}
+.flex-controls {
+    flex: 1 0 200px;
 }
