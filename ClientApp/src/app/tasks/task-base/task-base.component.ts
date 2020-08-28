@@ -28,6 +28,7 @@ export class TaskBaseComponent implements OnInit {
   viewmember: FamilyMember
   viewfamily: UserMembership
   roletext: string[] = ['Parent Administrator', 'Parent', 'Secondary Adult', 'Child']
+  roleselect: string
 
   constructor(private store: Store<RootState>, private family: FamilyService, private user: UserService) {
     this.viewfid$ = this.store.select(Selectors.getViewedFamily)
@@ -58,17 +59,22 @@ export class TaskBaseComponent implements OnInit {
       })
   }
 
-  modifyMember(role?: number) {
+  modifyMember(role?: string) {
+    console.log(role)
     let accepted: Relation = {
       id: this.viewmember.relationId,
       userId: this.viewmember.id,
       familyId: this.viewmember.familyId,
-      role: this.viewmember.role,
-      confirmed: true
     }
-    if (role) {
-      accepted.role = role
+    if (this.viewmember.id === this.userprofile.id) {
+      accepted.confirmed = true
     }
+    else accepted.confirmed = this.viewmember.confirmed
+    
+    if (role && parseInt(role) > 0) {
+      accepted.role = parseInt(role)
+    }
+    else accepted.role = this.viewmember.role
     this.family.editMembership(accepted, false)
   }
   
