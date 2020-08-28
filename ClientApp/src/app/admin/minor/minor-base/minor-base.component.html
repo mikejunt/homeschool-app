@@ -1,4 +1,4 @@
-<div class="button-container">
+<div class="button-container" *ngIf="minor">
     <button class="nav-button" mat-raised-button color="primary" (click)="navigate()" class="" *ngIf="minor.id"
         matBadge="{{minorinvites}}" [matBadgeHidden]="minorinvites === 0 ? true : false"
         matBadgeColor="accent">{{minor.firstName}} {{minor.lastName}}</button>

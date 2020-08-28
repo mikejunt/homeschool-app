@@ -7,6 +7,7 @@ import * as Actions from '../store/actions';
 import * as Selectors from '../store/selectors';
 import { UserMembership } from '../interfaces/user-membership.interface';
 import { Observable } from 'rxjs';
+import { DBError } from '../interfaces/dberror.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -49,11 +50,11 @@ export class MinorService {
       parentEmail: email,
     }
     // this could use a failsafe preventing a minor from entering the email of another minor
-    this.http.post(`https://hsappapi.azurewebsites.net/api/users/update/${newMinor.id}`, newMinor).subscribe((result: User) => {
-      if (result.minor) {
-        this.store.dispatch(Actions.setUserInfo({ user: result }))
+    this.http.put(`https://hsappapi.azurewebsites.net/api/users/update/${newMinor.id}`, newMinor).subscribe((result: DBError | null) => {
+      if (result) {
+        console.log(result)
       }
-      else console.log("The changes could not be saved.")
+      else this.store.dispatch(Actions.setUserInfo({ user: newMinor }))
     })
   }
 
@@ -68,11 +69,11 @@ export class MinorService {
         minor: false,
         parentEmail: "",
       }
-      this.http.post(`https://hsappapi.azurewebsites.net/api/users/update/${newAdult.id}`, newAdult).subscribe((result: User) => {
-        if (!result.minor) {
-          this.getUsersMinors(this.userprofile.email)
+      this.http.put(`https://hsappapi.azurewebsites.net/api/users/update/${newAdult.id}`, newAdult).subscribe((result: DBError | null) => {
+        if (result) {
+          console.log(result)
         }
-        else console.log("The changes could not be saved.")
+        else this.getUsersMinors(this.userprofile.email)
       })
     }
   else console.log("User is not the minor's primary adult.")}
