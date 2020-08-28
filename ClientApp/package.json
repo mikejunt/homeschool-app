@@ -1,6 +1,6 @@
 {
   "name": "homeschool",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "echo Starting serve... && ng serve",
