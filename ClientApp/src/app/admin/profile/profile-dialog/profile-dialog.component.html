@@ -1,0 +1,25 @@
+<div class="dialog-container dialog-min-width dialog-flex-container">
+    <h2 mat-dialog-title class="dialog-flex">Enter Primary Parent Email To Convert To Minor Account</h2>
+    <p class="dialog-flex">The account associated with the email you enter will become this account's administrator.</p>
+    <div mat-dialog-content class="dialog-flex">
+        <form [formGroup]=" emailForm" class="dialog-min-width">
+            <mat-form-field class="dialog-min-width">
+                <mat-label>Enter Parent Email Address:</mat-label>
+                <input matInput formControlName="email" type="text" placeholder="Enter email...">
+                <mat-hint>It doesn't matter if this person hasn't logged in yet.</mat-hint>
+                <mat-error>This must be a valid email address.</mat-error>
+            </mat-form-field>
+            <mat-form-field class="dialog-min-width">
+                <mat-label>Confirm Email Address:</mat-label>
+                <input matInput formControlName="confirm" type="text" placeholder="Same email...">
+                <mat-error>Emails must match.</mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+    <div class="dialog-flex">
+        <p>Make sure the email you entered is correct. Saving will surrender account controls to that user, and only
+            they can return them.</p>
+        <button mat-raised-button color="warn" (click)="toggleMinor()" [disabled]="!emailForm.valid">Save</button>
+        <button mat-raised-button color="accent" (click)="cancelMinor()">Back</button>
+    </div>
+</div>

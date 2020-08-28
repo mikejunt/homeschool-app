@@ -1,0 +1,18 @@
+.dialog-container {
+    width: 100%;
+    max-width: 480px;
+    height: 250px;
+}
+
+.dialog-flex-container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.dialog-flex {
+    flex: 0 0 100%;
+}
+
+.dialog-min-width {
+    min-width: 320px;
+}

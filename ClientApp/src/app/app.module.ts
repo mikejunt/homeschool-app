@@ -22,7 +22,10 @@ import { MinorControlComponent } from './admin/minor/minor-control/minor-control
 import { TaskDisplayComponent } from './tasks/task-display/task-display.component';
 import { FamilyEditComponent } from './admin/family/family-edit/family-edit.component';
 import { FamilyCreateComponent } from './admin/family/family-create/family-create.component';
-import { FamilyInviteComponent } from './admin/family/family-invite/family-invite.component'
+import { FamilyInviteComponent } from './admin/family/family-invite/family-invite.component';
+import { ProfileComponent } from './admin/profile/profile.component';
+import { MinorDialogComponent } from './admin/minor/minor-dialog/minor-dialog.component';
+import { ProfileDialogComponent } from './admin/profile/profile-dialog/profile-dialog.component'
 
 @NgModule({
   declarations: [
@@ -41,7 +44,10 @@ import { FamilyInviteComponent } from './admin/family/family-invite/family-invit
     TaskDisplayComponent,
     FamilyEditComponent,
     FamilyCreateComponent,
-    FamilyInviteComponent
+    FamilyInviteComponent,
+    ProfileComponent,
+    MinorDialogComponent,
+    ProfileDialogComponent
   ],
   imports: [
     BrowserModule,
