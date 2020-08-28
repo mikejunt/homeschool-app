@@ -1,5 +1,5 @@
 <div class="button-container">
-    <button class="nav-button" mat-raised-button color="accent" (click)="navigate()"
+    <button class="nav-button" mat-raised-button [color]="familymember.confirmed ? 'primary':'accent'" (click)="navigate()"
         [disabled]="!(familymember.confirmed || familymember.id === user.id || viewfam.adminId === user.id)" class=""
         *ngIf="familymember">{{familymember.firstName}} {{familymember.lastName}}</button>
 </div>
